@@ -8,6 +8,6 @@ export default defineNuxtConfig({
     preset: 'static'
   },
   app: {
-    baseURL: '/settled_product/' 
+    baseURL: '/settled_products/' 
   }
 })
