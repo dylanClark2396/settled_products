@@ -24,7 +24,7 @@ jobs:
       - name: "Install dependencies"
         run: pnpm install --shamefully-hoist
 
-      - run: npx nuxt generate
+      - run: npx nuxt build --preset github_pages
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
