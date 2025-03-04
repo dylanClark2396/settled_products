@@ -1,9 +1,9 @@
 <template>
   <!-- whole page -->
   <div style="display: flex; align-items: center; justify-content: center; flex-flow: column; height: 100vh;">
-    <div class="give-border" style="display: flex; width: 100%; height: 100%;">
+    <div style="display: flex; width: 100%; height: 100%;">
       <!-- filters -->
-      <div class="give-border" style="width: 10%; margin: 2rem 2rem;">
+      <div style="width: 10%; margin: 2rem 2rem;">
         <div>
           filter 1
         </div>
@@ -21,9 +21,9 @@
         </div>
       </div>
       <!-- product list -->
-      <div class="give-border" style="width: 90%; margin: 2rem .5rem; overflow-y: scroll; max-height: 100%; display: flex; flex-wrap: wrap; max-width: 90%;">
+      <div style="width: 90%; margin: 2rem .5rem; overflow-y: scroll; max-height: 100%; display: flex; flex-wrap: wrap; max-width: 90%;">
         <div v-for="item in data" class="card">
-          <UCard :ui="{background: 'dark:bg-transparent', divide: 'divide-y dark:divide-amber-300', ring: 'ring-1 dark:ring-amber-300'}">
+          <UCard :ui="{background: 'bg-transparent', divide: 'divide-y divide-stone-400', ring: 'ring-1 ring-stone-400'}">
             <template #header>
               {{ item.name }}
             </template>
@@ -63,11 +63,28 @@ import data from "../fmp-data.json";
   width: fit-content;
 }
 
-.card {
-  flex: 0 0 calc(33.33% - 20px);
-  max-width: calc(33.33% - 20px);
-  /* margin-bottom: 20px; */
-  margin: 10px;
-  box-sizing: border-box; 
+@media only screen and (min-width: 500px) {
+  .card {
+    flex: 0 0 calc(100% - 20px);
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    box-sizing: border-box; 
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .card {
+    flex: 0 0 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+    margin: 10px;
+    box-sizing: border-box; 
+  }
+}
+@media only screen and (min-width: 1920px) {
+  .card {
+    flex: 0 0 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+    margin: 10px;
+    box-sizing: border-box; 
+  }
 }
 </style>

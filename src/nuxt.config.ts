@@ -9,5 +9,8 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: '/settled_products/' 
+  },
+  colorMode: {
+    preference: 'light'
   }
 })
