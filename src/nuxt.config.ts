@@ -3,5 +3,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: ['@nuxt/ui'],
-  ssr:false
+  ssr:false,
+  nitro: {
+    preset: 'static'
+  },
+  app: {
+    baseURL: '/settled_product/' // Replace with your repository name
+  }
 })
