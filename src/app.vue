@@ -63,14 +63,13 @@ import data from "../fmp-data.json";
   width: fit-content;
 }
 
-@media only screen and (min-width: 500px) {
-  .card {
-    flex: 0 0 calc(100% - 20px);
-    max-width: calc(100% - 20px);
-    margin: 10px;
-    box-sizing: border-box; 
-  }
+.card {
+  flex: 0 0 calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  margin: 10px;
+  box-sizing: border-box; 
 }
+
 @media only screen and (min-width: 1000px) {
   .card {
     flex: 0 0 calc(50% - 20px);
@@ -79,7 +78,7 @@ import data from "../fmp-data.json";
     box-sizing: border-box; 
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1900px) {
   .card {
     flex: 0 0 calc(33.33% - 20px);
     max-width: calc(33.33% - 20px);
