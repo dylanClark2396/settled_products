@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <UModal v-model="isFilterModalOpen">
+  <UModal v-model="isFilterModalOpen" :ui="{container: 'items-center'}">
     <div class="p-4">
       Symbol
       <USelectMenu v-model="symbolFilter" :options="symbolOptions" @update:model-value="addFilterControl('symbol', symbolFilter)"/>
@@ -73,9 +73,7 @@ const symbolOptions = computed(() => {
 })
 
 const sectorOptions = computed(() => {
-  return tempData.map((temp) => {
-    return temp.sector
-  })
+  return [...new Set(tempData.map((temp) => temp.sector))];
 })
 
 const filteredRows = computed(() => {
