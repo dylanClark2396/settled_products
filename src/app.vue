@@ -3,26 +3,15 @@
   <div style="display: flex; align-items: center; justify-content: center; flex-flow: column; height: 100vh;">
     <div style="display: flex; width: 100%; height: 100%;">
       <!-- filters -->
-      <div style="width: 10%; margin: 2rem 2rem;">
-        <div>
-          filter 1
-        </div>
-
-        <div>
-          filter 2
-        </div>
-
-        <div>
-          filter 3
-        </div>
-
-        <div>
-          filter 4
+      <div style="width: 10%; margin: 2rem 0;">
+        <div style="margin: 10px;">
+          Symbol
+          <USelectMenu v-model="symbolfilter" :options="symbolOptions"/>
         </div>
       </div>
       <!-- product list -->
-      <div style="width: 90%; margin: 2rem .5rem; overflow-y: scroll; max-height: 100%; display: flex; flex-wrap: wrap; max-width: 90%;">
-        <div v-for="item in data" class="card">
+      <div style="width: 90%; margin: 2rem 0; overflow-y: scroll; max-height: 100%; display: flex; flex-wrap: wrap; max-width: 90%;">
+        <div v-for="item in filteredRows" class="card">
           <UCard :ui="{background: 'bg-transparent', divide: 'divide-y divide-stone-400', ring: 'ring-1 ring-stone-400'}">
             <template #header>
               {{ item.name }}
@@ -40,14 +29,41 @@
             </div>
           </UCard>
         </div>
-        right
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import data from "../fmp-data.json";
+import tempData from "../fmp-data.json";
 
+interface TempData {
+  symbol: string; 
+  name: string; 
+  sector: string; 
+  subSector: string; 
+  headQuarter: string; 
+  dateFirstAdded: string;
+  cik: string; 
+  founded: string;
+}
+
+const symbolfilter = ref()
+
+const symbolOptions = computed(() => {
+  return tempData.map((temp) => {
+    return temp.symbol
+  })
+})
+
+const filteredRows = computed(() => {
+  console.log(symbolfilter.value)
+  if (!symbolfilter.value) {
+    return tempData
+  }
+
+  return tempData.filter(item => item.symbol.toLowerCase() === symbolfilter.value.toLowerCase());
+
+})
 
 </script>
 <style lang="css">
