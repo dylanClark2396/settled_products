@@ -1,37 +1,42 @@
 <template>
   <!-- whole page -->
-  <div style="display: flex; align-items: center; justify-content: center; flex-flow: column; height: 100vh;">
-    <div style="display: flex; width: 100%; height: 100%;">
-      <!-- filters -->
-      <div style="width: 10%; margin: 2rem 0;">
-        <div style="margin: 10px;">
-          Symbol
-          <USelectMenu v-model="symbolfilter" :options="symbolOptions"/>
-        </div>
-      </div>
-      <!-- product list -->
-      <div style="width: 90%; margin: 2rem 0; overflow-y: scroll; max-height: 100%; display: flex; flex-wrap: wrap; max-width: 90%;">
-        <div v-for="item in filteredRows" class="card">
-          <UCard :ui="{background: 'bg-transparent', divide: 'divide-y divide-stone-400', ring: 'ring-1 ring-stone-400'}">
-            <template #header>
-              {{ item.name }}
-            </template>
+  <div style="display: flex; align-items: center; justify-content: center; flex-flow: column; max-height: 100vh;">
+    <div style="display: flex; margin-top: 1rem; flex-flow: row;">
+      <!-- search bar -->
+       <div style="margin-right: 1rem;">
+         <UInput v-model="searchFilter" placeholder="Search"/>
+       </div>
+      <UButton label="Filter" @click="isFilterModalOpen = true" />
+    </div>
+    <!-- product list -->
+    <div style="width: 95%; overflow-y: auto; max-height: 95%; display: flex; flex-wrap: wrap;">
+      <div v-for="item in filteredRows" class="card">
+        <UCard :ui="{background: 'bg-transparent', divide: 'divide-y divide-stone-400', ring: 'ring-1 ring-stone-400'}">
+          <template #header>
+            {{ item.name }}
+          </template>
+          <div>
             <div>
-              <div>
-                Symbol: {{ item.symbol }}
-              </div>
-              <div>
-                Sector: {{ item.sector }}
-              </div>
-              <div>
-                Founded: {{ item.founded }}
-              </div>
+              Symbol: {{ item.symbol }}
             </div>
-          </UCard>
-        </div>
+            <div>
+              Sector: {{ item.sector }}
+            </div>
+            <div>
+              Founded: {{ item.founded }}
+            </div>
+          </div>
+        </UCard>
       </div>
     </div>
   </div>
+
+  <UModal v-model="isFilterModalOpen">
+    <div class="p-4">
+      Symbol
+      <USelectMenu v-model="symbolfilter" :options="symbolOptions"/>
+    </div>
+  </UModal>
 </template>
 <script setup lang="ts">
 import tempData from "../fmp-data.json";
@@ -46,6 +51,10 @@ interface TempData {
   cik: string; 
   founded: string;
 }
+
+const isFilterModalOpen = ref(false)
+
+const searchFilter = ref()
 
 const symbolfilter = ref()
 
