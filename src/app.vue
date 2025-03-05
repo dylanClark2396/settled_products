@@ -34,7 +34,11 @@
   <UModal v-model="isFilterModalOpen">
     <div class="p-4">
       Symbol
-      <USelectMenu v-model="symbolfilter" :options="symbolOptions"/>
+      <USelectMenu v-model="symbolFilter" :options="symbolOptions" @update:model-value="addFilterControl('symbol', symbolFilter)"/>
+    </div>
+    <div class="p-4">
+      Sector
+      <USelectMenu v-model="sectorFilter" :options="sectorOptions" @update:model-value="addFilterControl('sector', sectorFilter)"/>
     </div>
   </UModal>
 </template>
@@ -42,6 +46,7 @@
 import tempData from "../fmp-data.json";
 
 interface TempData {
+  [id: string]: string;
   symbol: string; 
   name: string; 
   sector: string; 
@@ -56,7 +61,10 @@ const isFilterModalOpen = ref(false)
 
 const searchFilter = ref()
 
-const symbolfilter = ref()
+const symbolFilter = ref()
+const sectorFilter = ref()
+
+const filters = ref<{[id: string]: string}>({})
 
 const symbolOptions = computed(() => {
   return tempData.map((temp) => {
@@ -64,15 +72,27 @@ const symbolOptions = computed(() => {
   })
 })
 
-const filteredRows = computed(() => {
-  console.log(symbolfilter.value)
-  if (!symbolfilter.value) {
-    return tempData
-  }
-
-  return tempData.filter(item => item.symbol.toLowerCase() === symbolfilter.value.toLowerCase());
-
+const sectorOptions = computed(() => {
+  return tempData.map((temp) => {
+    return temp.sector
+  })
 })
+
+const filteredRows = computed(() => {
+  return tempData.filter((item: TempData) => 
+    Object.keys(filters.value).every(key =>{
+      return item[key].toLowerCase() === filters.value[key].toLowerCase() || filters.value[key] === undefined
+    })
+  );
+})
+
+const addFilterControl = (filterControl: string, filterValue: string) => {
+   filters.value[filterControl] = filterValue
+}
+
+const removeFilterControl = (filterControl: string) => {
+   delete filters.value[filterControl]
+}
 
 </script>
 <style lang="css">
