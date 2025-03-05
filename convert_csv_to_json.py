@@ -8,7 +8,7 @@ def csv_to_json(csv_file, json_file):
         
         # Remove any empty or None headers
         filtered_data = [
-            {key: value for key, value in row.items() if key and key.strip()} 
+            {key.replace(" ", "_"): value for key, value in row.items() if key and key.strip()} 
             for row in csv_reader
         ]
 
@@ -16,4 +16,4 @@ def csv_to_json(csv_file, json_file):
         json.dump(filtered_data, file, indent=4)
 
 # Example usage
-csv_to_json('fmp-data.csv', 'fmp-data.json')
+csv_to_json('Settled Product Database - acrylic bins.csv', 'settled_product_database_acrylic_bins.json')

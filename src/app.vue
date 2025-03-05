@@ -17,13 +17,16 @@
           </template>
           <div>
             <div>
-              Symbol: {{ item.symbol }}
+              Product Type: {{ item.product_type }}
             </div>
             <div>
-              Sector: {{ item.sector }}
+              Width: {{ item.width }}
             </div>
             <div>
-              Founded: {{ item.founded }}
+              Depth: {{ item.depth }}
+            </div>
+            <div>
+              Height: {{ item.height }}
             </div>
           </div>
         </UCard>
@@ -32,53 +35,74 @@
   </div>
 
   <UModal v-model="isFilterModalOpen" :ui="{container: 'items-center'}">
-    <div class="p-4">
-      Symbol
-      <USelectMenu v-model="symbolFilter" :options="symbolOptions" @update:model-value="addFilterControl('symbol', symbolFilter)"/>
+    <div class="p-4" style="display: flex; flex-direction: column;">
+      Product Type
+      <UButtonGroup size="sm" orientation="horizontal">
+        <USelectMenu v-model="productTypeFilter" :options="productTypeOptions" @update:model-value="addFilterControl('product_type', productTypeFilter)"/>
+        <UButton icon="i-heroicons:x-mark-solid" color="red" v-if="productTypeFilter" @click="removeFilterControl('product_type'), productTypeFilter = ''" />
+      </UButtonGroup>
     </div>
-    <div class="p-4">
-      Sector
-      <USelectMenu v-model="sectorFilter" :options="sectorOptions" @update:model-value="addFilterControl('sector', sectorFilter)"/>
+    <div class="p-4" style="display: flex; flex-direction: column;">
+      Width
+      <UButtonGroup size="sm" orientation="horizontal">
+        <UInput v-model="widithFilter" @update:model-value="addFilterControl('width', widithFilter)"/>
+        <UButton icon="i-heroicons:x-mark-solid" color="red" v-if="widithFilter" @click="removeFilterControl('width'), widithFilter = ''" />
+      </UButtonGroup>
+    </div>
+    <div class="p-4" style="display: flex; flex-direction: column;">
+      Depth
+      <UButtonGroup size="sm" orientation="horizontal">
+        <UInput v-model="depthFilter" @update:model-value="addFilterControl('depth', depthFilter)"/>
+        <UButton icon="i-heroicons:x-mark-solid" color="red" v-if="depthFilter" @click="removeFilterControl('depth'), depthFilter = ''" />
+      </UButtonGroup>
+    </div>
+    <div class="p-4"  style="display: flex; flex-direction: column;">
+      Height
+      <UButtonGroup size="sm" orientation="horizontal">
+        <UInput v-model="heightFilter" @update:model-value="addFilterControl('height', heightFilter)"/>
+        <UButton icon="i-heroicons:x-mark-solid" color="red" v-if="heightFilter" @click="removeFilterControl('height'), heightFilter = ''" />
+      </UButtonGroup>
     </div>
   </UModal>
 </template>
 <script setup lang="ts">
-import tempData from "../fmp-data.json";
+import tempData from "../settled_product_database_acrylic_bins.json";
 
 interface TempData {
   [id: string]: string;
-  symbol: string; 
   name: string; 
-  sector: string; 
-  subSector: string; 
-  headQuarter: string; 
-  dateFirstAdded: string;
-  cik: string; 
-  founded: string;
+  image: string;
+  width: string;
+  depth: string;
+  height: string;
+  sku: string;
+  store: string;
+  price: string
+  room_used_in: string;
+  product_type: string;
+  material: string;
 }
 
 const isFilterModalOpen = ref(false)
 
 const searchFilter = ref()
 
-const symbolFilter = ref()
-const sectorFilter = ref()
+const productTypeFilter = ref('')
+const widithFilter = ref('')
+const depthFilter = ref('')
+const heightFilter = ref('')
+
 
 const filters = ref<{[id: string]: string}>({})
 
-const symbolOptions = computed(() => {
-  return tempData.map((temp) => {
-    return temp.symbol
-  })
-})
-
-const sectorOptions = computed(() => {
-  return [...new Set(tempData.map((temp) => temp.sector))];
+const productTypeOptions = computed(() => {
+  return [...new Set(tempData.map((temp) => temp.product_type).filter(type => type))];
 })
 
 const filteredRows = computed(() => {
   return tempData.filter((item: TempData) => 
     Object.keys(filters.value).every(key =>{
+      console.log(key)
       return item[key].toLowerCase() === filters.value[key].toLowerCase() || filters.value[key] === undefined
     })
   );
@@ -121,7 +145,7 @@ const removeFilterControl = (filterControl: string) => {
     box-sizing: border-box; 
   }
 }
-@media only screen and (min-width: 1900px) {
+@media only screen and (min-width: 1400px) {
   .card {
     flex: 0 0 calc(33.33% - 20px);
     max-width: calc(33.33% - 20px);
