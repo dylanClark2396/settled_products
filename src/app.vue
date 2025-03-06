@@ -34,11 +34,11 @@
     </div>
   </div>
 
-  <UModal v-model="isFilterModalOpen" :ui="{container: 'items-center'}">
+  <UModal v-model="isFilterModalOpen" :ui="{container: 'items-center', width: 'w-min'}">
     <div class="p-4" style="display: flex; flex-direction: column;">
       Product Type
       <UButtonGroup size="sm" orientation="horizontal">
-        <USelectMenu v-model="productTypeFilter" :options="productTypeOptions" @update:model-value="addFilterControl('product_type', productTypeFilter)"/>
+        <USelectMenu v-model="productTypeFilter" :options="productTypeOptions" @update:model-value="addFilterControl('product_type', productTypeFilter)" style="width: 179px"/>
         <UButton icon="i-heroicons:x-mark-solid" color="red" v-if="productTypeFilter" @click="removeFilterControl('product_type'), productTypeFilter = ''" />
       </UButtonGroup>
     </div>
@@ -103,7 +103,7 @@ const filteredRows = computed(() => {
   return tempData.filter((item: TempData) => 
     Object.keys(filters.value).every(key =>{
       console.log(key)
-      return item[key].toLowerCase() === filters.value[key].toLowerCase() || filters.value[key] === undefined
+      return item[key].toLowerCase().includes(filters.value[key].toLowerCase()) || filters.value[key] === undefined
     })
   );
 })
