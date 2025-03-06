@@ -66,7 +66,7 @@
   </UModal>
 </template>
 <script setup lang="ts">
-import tempData from "../settled_product_database_acrylic_bins.json";
+import tempData from "./data/settled_product_database_acrylic_bins.json";
 
 interface TempData {
   [id: string]: string;
