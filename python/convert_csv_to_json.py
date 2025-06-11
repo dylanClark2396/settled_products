@@ -16,4 +16,5 @@ def csv_to_json(csv_file, json_file):
         json.dump(filtered_data, file, indent=4)
 
 # Example usage
-csv_to_json('Settled Product Database - acrylic bins.csv', '../src/data/settled_product_database_acrylic_bins.json')
+# csv_to_json('Settled Product Database - acrylic bins.csv', '../src/data/settled_product_database_acrylic_bins.json')
+csv_to_json('sheets/_combined.csv', '../src/data/combined.json')

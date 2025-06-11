@@ -13,20 +13,17 @@
       <div v-for="item in filteredRows" class="card">
         <UCard :ui="{background: 'bg-transparent', divide: 'divide-y divide-stone-400', ring: 'ring-1 ring-stone-400'}">
           <template #header>
-            {{ item.name }}
+            {{ item.ITEM }}
           </template>
           <div>
             <div>
-              Product Type: {{ item.product_type }}
+              Room: {{ item.ROOM }}
             </div>
             <div>
-              Width: {{ item.width }}
+              Dimensions: {{ item.DIMENSIONS }}
             </div>
             <div>
-              Depth: {{ item.depth }}
-            </div>
-            <div>
-              Height: {{ item.height }}
+              Price: {{ item.PRICE }}
             </div>
           </div>
         </UCard>
@@ -66,21 +63,33 @@
   </UModal>
 </template>
 <script setup lang="ts">
-import tempData from "./data/settled_product_database_acrylic_bins.json";
+// import tempData from "./data/settled_product_database_acrylic_bins.json";
+import tempData from "./data/combined.json";
+
+// interface TempData {
+//   [id: string]: string;
+//   name: string; 
+//   image: string;
+//   width: string;
+//   depth: string;
+//   height: string;
+//   sku: string;
+//   store: string;
+//   price: string
+//   room_used_in: string;
+//   product_type: string;
+//   material: string;
+// }
 
 interface TempData {
-  [id: string]: string;
-  name: string; 
-  image: string;
-  width: string;
-  depth: string;
-  height: string;
-  sku: string;
-  store: string;
-  price: string
-  room_used_in: string;
-  product_type: string;
-  material: string;
+  [SKU: string]: string;
+  ITEM: string,
+  IMAGE: string,
+  DIMENSIONS: string,
+  PRICE: string,
+  QUANITY: string,
+  TOTAL: string,
+  ROOM: string
 }
 
 const isFilterModalOpen = ref(false)
@@ -96,7 +105,7 @@ const heightFilter = ref('')
 const filters = ref<{[id: string]: string}>({})
 
 const productTypeOptions = computed(() => {
-  return [...new Set(tempData.map((temp) => temp.product_type).filter(type => type))];
+  return [...new Set(tempData.map((temp) => temp.ROOM).filter(type => type))];
 })
 
 const filteredRows = computed(() => {
