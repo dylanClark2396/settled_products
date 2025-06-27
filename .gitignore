@@ -2,3 +2,4 @@
 /python/sheets/*.csv
 /python/combined_output.csv
 /python/extracted_images
+/python/image_cell_mapping.csv
